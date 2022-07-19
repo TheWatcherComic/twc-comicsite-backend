@@ -21,7 +21,7 @@ class Server {
         stack: err.stack || 'no stack defined'
       });
     });
-    this.connectDB();
+    //this.connectDB();
     this.routes();
   }
   routes() {
