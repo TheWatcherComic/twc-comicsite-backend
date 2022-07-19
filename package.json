@@ -19,6 +19,8 @@
     "mongoose": "^6.4.4",
     "morgan": "^1.10.0",
     "node-cache": "^5.1.2",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "uuidv4": "^6.2.13",
+    "yappy-node-back-sdk": "file:yappy-node-back-sdk-1.1.222.tar"
   }
 }
