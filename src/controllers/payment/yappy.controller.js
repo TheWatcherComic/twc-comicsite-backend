@@ -11,8 +11,8 @@ const payment = {
   discount: 0.0,
   taxes: null,
   orderId: null,
-  successUrl: "https://the-watcher-comic-backend.herokuapp.com/api/pagosbg/id/1234",
-  failUrl: "https://yappy.peqa.dev",
+  successUrl: `https://the-watcher-comic-backend.herokuapp.com/api/pagosbg/id/${1234}/status/success`,
+  failUrl: `https://the-watcher-comic-backend.herokuapp.com/api/pagosbg/id/${1234}/status/error`,
   tel: process.env.TEL || "66666666",
   domain: process.env.DOMAIN || "https://yappy.peqa.dev/",
 };
@@ -20,7 +20,7 @@ const payment = {
 class YappyController {
     
     async generateUrlMethod(req, res) {
-        const string =`https://the-watcher-comic-backend.herokuapp.com/api/pagosbg?${1234}`
+        const string =`https://the-watcher-comic-backend.herokuapp.com/api/pagosbg/id/${1234}/status/success`
         console.log("String " + string)
         const { name, price: subtotal } = req.body;
         const uuid = uuidv4();
