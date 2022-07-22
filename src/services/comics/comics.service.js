@@ -8,9 +8,10 @@ class comicsService {
     const currentTime = date.getTime();
     const cacheExpiration = date.getTime() + (60 * 60 * 24 * 30 * 1000);
 
-    const [rows, fields] = await connect.execute('call dbsp_getData()');
-    
+    const [rows, fields] = await connect.execute('call dbsp_getAllComics()');
+  
     console.log(rows);
+
     
     return { data: rows, isCached: false };
   }

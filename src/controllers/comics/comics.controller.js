@@ -7,6 +7,6 @@ exports.getAllComicsData = async function(req, res) {
         return res.status(200).send( AllComicsData );
     } catch (err) {
         res.status(500).send(err);
-    }s
+    }
 
 }
