@@ -31,5 +31,10 @@ class YappyService {
         };
         return yappyClient.getPaymentUrl(newPayment);
     }
+    async confirmPaymentService({ id, status }) {
+        if(status === "error") {
+            throw new Error('Error encontrado');
+        }
+    }
 }
 module.exports = YappyService;
