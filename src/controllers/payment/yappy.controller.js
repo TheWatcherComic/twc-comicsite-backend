@@ -15,7 +15,7 @@ class YappyController {
         console.log("Request " + req.params);
         const data = req.params;
         console.log("Data" + JSON.stringify(data));
-        return res.status(301).redirect("https://www.google.com")
+        return res.status(301).redirect("https://twc-comicsite-frontend.vercel.app")
     }
 }
 module.exports = YappyController;
