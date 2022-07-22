@@ -4,14 +4,17 @@ const cors = require('cors');
 const getFilesWithKeyword = require('./utils/getFilesWithKeyword');
 const morgan = require('morgan');
 const fs = require('fs');
-const { dbConnection } = require('./config/mongoose.config')
 
 class Server {
   constructor() {
+
+    //initializacions
     this.app = express();
     this.app.set('json spaces', 4);
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+
+    // middlewares
     this.app.use(morgan('dev'));
     this.app.use(cors());
     this.app.use((err, req, res, next) => {
@@ -21,18 +24,20 @@ class Server {
         stack: err.stack || 'no stack defined'
       });
     });
-    this.connectDB();
+
+    //call funtions
     this.routes();
   }
+
+  // Routes
   routes() {
     getFilesWithKeyword('router', __dirname + '/routes').forEach((file) => {
       const router = require(file);
       this.app.use('/', router);
     })
   }
-  async connectDB() {
-    await dbConnection();
-  }
+
+  // Starting the server
   listen() {
     const port = process.env.PORT || 5000;
     this.app.listen(port, () => {
