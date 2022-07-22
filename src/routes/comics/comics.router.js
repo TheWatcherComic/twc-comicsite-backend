@@ -7,4 +7,5 @@ const router = Router()
 .get(ALLCOMICS_ENDPOINT + "/marvel" ,  controller.getAllComicsData)
 .get(ALLCOMICS_ENDPOINT + "/dc" ,  controller.getAllComicsData);
 
+
 module.exports = router;
