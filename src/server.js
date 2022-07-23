@@ -8,13 +8,13 @@ const fs = require('fs');
 class Server {
   constructor() {
 
-    //initializacions
+    // Initialization
     this.app = express();
     this.app.set('json spaces', 4);
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
 
-    // middlewares
+    // Middlewares
     this.app.use(morgan('dev'));
     this.app.use(cors());
     this.app.use((err, req, res, next) => {
@@ -24,9 +24,7 @@ class Server {
         stack: err.stack || 'no stack defined'
       });
     });
-    //this.connectDB();
 
-    //call funtions
     this.routes();
   }
 
