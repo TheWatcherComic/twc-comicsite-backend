@@ -7,7 +7,7 @@ let yappyClient = createClient(process.env.MERCHANT_ID, process.env.SECRET_KEY);
 class YappyService {
     
     async generateUrlService({body, authId}) {
-        const { price: subtotal, clientId, comicIds} = body
+        const { price: subtotal, comicIds} = body
         const uuid = uuidv4();
         const taxes = Number((subtotal * 0.07).toFixed(2));
         const total = subtotal + taxes;
@@ -31,10 +31,10 @@ class YappyService {
             total: 0.02,
             orderId: orderId,
         };
-        const [rowsUser, fieldsUser] = await dbConnection.queryDB('call dbsp_getStoreComicsByUserId(?)', true, [4])
+        const [rowsUser, fieldsUser] = await dbConnection.queryDB('call dbsp_getStoreComicsByUserId(?)', true, [authId])
         rowsUser.forEach(element => {
             if(!comicIds.includes(element.com_id)) {
-                const [rows, fields] = dbConnection.queryDB('call dbsp_insertOrder(?, ?, ?, ?)', true, [orderId, 'generated', comicIds, 4]);
+                const [rows, fields] = dbConnection.queryDB('call dbsp_insertOrder(?, ?, ?, ?)', true, [orderId, 'generated', comicIds, authId]);
             }
         });
         return yappyClient.getPaymentUrl(newPayment);
