@@ -23,7 +23,6 @@ class ComicsController {
 
     async comicInfoController(req, res) {
         try {
-            //console.log(req.body);
             const response = await serviceInstance.ComicInfoService(req.body);
             return res.status(200).send(response);
         } catch (err) {
