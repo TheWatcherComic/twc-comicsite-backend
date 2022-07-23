@@ -15,4 +15,5 @@ class comicsService {
     }
 
 }
+
 module.exports = comicsService;
