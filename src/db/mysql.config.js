@@ -1,10 +1,10 @@
 const mysql = require('mysql2');
 
 const dbPool = mysql.createPool({
-    host: process.env.MYSQL_ADDON_HOST || "bmuhtfqfof4jojuatuzm-mysql.services.clever-cloud.com",
-    user: process.env.MYSQL_ADDON_USER || "uv1w0skiejiuphq3",
-    password: process.env.MYSQL_ADDON_PASSWORD || "DGblKw7dWQNP8uLXjgFC",
-    database: process.env.MYSQL_ADDON_DB || "bmuhtfqfof4jojuatuzm"
+    host: process.env.MYSQL_ADDON_HOST,
+    user: process.env.MYSQL_ADDON_USER,
+    password: process.env.MYSQL_ADDON_PASSWORD,
+    database: process.env.MYSQL_ADDON_DB
 });
 
 async function queryDB(query, useExecute, args) {

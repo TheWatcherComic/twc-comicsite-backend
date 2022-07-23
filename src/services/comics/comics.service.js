@@ -3,17 +3,16 @@ const dbConnection = require('../../db/mysql.config')
 class comicsService {
 
     async comicsInfoService() {
-        const [rows, fields] = await dbConnection.queryDB('call dbsp_getAllComics()', true)
-        console.log("Database Response: " + JSON.stringify(rows));
-        return { data: rows, isCached: false };
+        const [rows, fields] = await connect.execute('call dbsp_getAllComics()');
+        return { data: rows};
     }
 
-    async userComicsService({authId}) {
-        const [rows, fields] = await dbConnection.queryDB('call dbsp_getStoreComicsByUserId(?)', true, [authId])
-        console.log("Database Response: " + JSON.stringify(rows));
-        return { data: rows, isCached: false };
+    async userComicsService({userId}) {
+        const [rows, fields] = await connect.execute('call dbsp_getStoreComicsByUserId(?)', [userId]);
+        return { data: rows};
     }
 
 }
+
 
 module.exports = comicsService;

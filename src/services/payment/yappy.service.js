@@ -37,13 +37,10 @@ class YappyService {
                 const [rows, fields] = dbConnection.queryDB('call dbsp_insertOrder(?, ?, ?, ?)', true, [orderId, 'generated', comicIds, 4]);
             }
         });
-        
-        console.log("Database Response: " + JSON.stringify(rows));
         return yappyClient.getPaymentUrl(newPayment);
     }
     async confirmPaymentService({ id, status }) {
         const [rows, fields] = await dbConnection.queryDB('call dbsp_updateOrderByOrderId(?, ?)', true, [id, status]);
-        console.log("Database Response: " + JSON.stringify(rows));
     }
 }
 module.exports = YappyService;
