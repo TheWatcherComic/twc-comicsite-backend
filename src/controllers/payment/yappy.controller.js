@@ -5,7 +5,7 @@ class YappyController {
 
     async generateUrlMethod(req, res) {
         try {
-            const response = await serviceInstance.generateUrlService(req.body);
+            const response = await serviceInstance.generateUrlService(req);
             return res.status(200).send(response);
         } catch (err) {
             res.status(500).send(err);

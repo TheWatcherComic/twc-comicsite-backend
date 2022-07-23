@@ -1,18 +1,17 @@
 const axios = require("axios").default;
-const connect = require('../../db/mysql.config')
-
+const dbConnection = require('../../db/mysql.config')
 class comicsService {
 
     async comicsInfoService() {
-        const [rows, fields] = await connect.execute('call dbsp_getAllComics()');
-        //console.log("Database Response: " + JSON.stringify(rows));
-        return { data: rows};
+        const [rows, fields] = await dbConnection.queryDB('call dbsp_getAllComics()', true)
+        console.log("Database Response: " + JSON.stringify(rows));
+        return { data: rows, isCached: false };
     }
 
-    async userComicsService({userId}) {
-        const [rows, fields] = await connect.execute('call dbsp_getStoreComicsByUserId(?)', [userId]);
-        //console.log("Database Response: " + JSON.stringify(rows));
-        return { data: rows};
+    async userComicsService({authId}) {
+        const [rows, fields] = await dbConnection.queryDB('call dbsp_getStoreComicsByUserId(?)', true, [authId])
+        console.log("Database Response: " + JSON.stringify(rows));
+        return { data: rows, isCached: false };
     }
 
 }
