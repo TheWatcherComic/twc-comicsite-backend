@@ -5,15 +5,16 @@ class comicsService {
 
     async comicsInfoService() {
         const [rows, fields] = await connect.execute('call dbsp_getAllComics()');
-        console.log("Database Response: " + JSON.stringify(rows));
-        return { data: rows, isCached: false };
+        //console.log("Database Response: " + JSON.stringify(rows));
+        return { data: rows};
     }
 
     async userComicsService({userId}) {
         const [rows, fields] = await connect.execute('call dbsp_getStoreComicsByUserId(?)', [userId]);
-        console.log("Database Response: " + JSON.stringify(rows));
-        return { data: rows, isCached: false };
+        //console.log("Database Response: " + JSON.stringify(rows));
+        return { data: rows};
     }
 
 }
+
 module.exports = comicsService;
