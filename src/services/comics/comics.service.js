@@ -8,8 +8,8 @@ class comicsService {
         return { data: rows};
     }
 
-    async userComicsService({userId}) {
-        const [rows, fields] = await dbConnection.queryDB('call dbsp_getStoreComicsByUserId(?)', true, [userId])
+    async userComicsService({authId}) {
+        const [rows, fields] = await dbConnection.queryDB('call dbsp_getStoreComicsByUserId(?)', true, [authId])
         return { data: rows};
     }
 
