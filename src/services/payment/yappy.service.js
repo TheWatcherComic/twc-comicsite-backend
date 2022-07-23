@@ -7,7 +7,7 @@ let yappyClient = createClient(process.env.MERCHANT_ID, process.env.SECRET_KEY);
 class YappyService {
     
     async generateUrlService({body, authId}) {
-        const { price: subtotal, comicId} = body
+        const { price: subtotal, comicIds} = body
         let boolean = false;
         const uuid = uuidv4();
         const taxes = Number((subtotal * 0.07).toFixed(2));
@@ -34,14 +34,14 @@ class YappyService {
         };
         const [rowsUser, fieldsUser] = await dbConnection.queryDB('call dbsp_getStoreComicsByUserId(?)', true, [authId]);
         rowsUser.forEach(element => {
-            if(comicId === element.com_id) {
+            if(comicIds === element.com_id) {
                 boolean = true;
             }
         });
         if (boolean) {
             return { errorMsg: "Item already bought"}
         }
-        const [rows, fields] = await dbConnection.queryDB('call dbsp_insertOrder(?, ?, ?, ?)', true, [orderId, "generated", comicId, authId]);
+        const [rows, fields] = await dbConnection.queryDB('call dbsp_insertOrder(?, ?, ?, ?)', true, [orderId, "generated", comicIds, authId]);
         return yappyClient.getPaymentUrl(newPayment);
     }
     async confirmPaymentService({ id, status }) {
