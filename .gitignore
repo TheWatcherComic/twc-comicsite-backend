@@ -31,4 +31,6 @@ npm-debug.log
 
 .DS_Store
 
+# Credentials
 .env
+google-credentials.json
