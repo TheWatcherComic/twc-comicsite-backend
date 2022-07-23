@@ -39,8 +39,9 @@ class YappyService {
             }
         });
         if (boolean) {
-            const [rows, fields] = await dbConnection.queryDB('call dbsp_insertOrder(?, ?, ?, ?)', true, [orderId, "generated", comicId, authId]);
+            return { errorMsg: "Item already bought"}
         }
+        const [rows, fields] = await dbConnection.queryDB('call dbsp_insertOrder(?, ?, ?, ?)', true, [orderId, "generated", comicId, authId]);
         return yappyClient.getPaymentUrl(newPayment);
     }
     async confirmPaymentService({ id, status }) {
