@@ -14,7 +14,7 @@ class ComicsController {
 
     async userComicsController(req, res) {
         try {
-            const response = await serviceInstance.userComicsService(req.body);
+            const response = await serviceInstance.userComicsService(req);
             return res.status(200).send(response);
         } catch (err) {
             res.status(500).send(err);
