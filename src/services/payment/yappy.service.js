@@ -1,6 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 const { createClient } = require("yappy-node-back-sdk");
-const query = require('../../db/mysql.config')
+const dbConnection = require('../../db/mysql.config')
 
 let yappyClient = createClient(process.env.MERCHANT_ID, process.env.SECRET_KEY);
 
@@ -11,8 +11,6 @@ class YappyService {
         const taxes = Number((subtotal * 0.07).toFixed(2));
         const total = subtotal + taxes;
         const orderId = uuid.split("-").join("").slice(0, 10)
-        console.log("ComicId " + comicId);
-        console.log("ClientId " + clientId);
         const payment = {
             total: null,
             subtotal: null,
@@ -32,14 +30,13 @@ class YappyService {
             total: 0.02,
             orderId: orderId,
         };
-        const [rows, fields] = await query.execute('call dbsp_insertOrder(?, ?, ?, ?)', [orderId, 'generated', comicIds, clientId]);
+        const [rows, fields] = await dbConnection.queryDB('call dbsp_insertOrder(?, ?, ?, ?)', true, [orderId, 'generated', comicIds, clientId]);
         console.log("Database Response: " + JSON.stringify(rows));
         return yappyClient.getPaymentUrl(newPayment);
     }
     async confirmPaymentService({ id, status }) {
-        const [rows, fields] = await query.execute('call dbsp_updateOrderByOrderId(?, ?)', [id, status]);
+        const [rows, fields] = await dbConnection.queryDB('call dbsp_updateOrderByOrderId(?, ?)', true, [id, status]);
         console.log("Database Response: " + JSON.stringify(rows));
-        
     }
 }
 module.exports = YappyService;
