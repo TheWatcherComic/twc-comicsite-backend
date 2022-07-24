@@ -40,7 +40,7 @@
           {
             "name": "authorization",
             "in": "header",
-            "description": "Payment information.",
+            "description": "Bearer Token",
             "required": true
           },
           {
@@ -91,7 +91,7 @@
           {
             "name": "authorization",
             "in": "header",
-            "description": "Payment information.",
+            "description": "Bearer Token",
             "required": true
           },
           {
@@ -108,6 +108,9 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK."
+          },
           "301": {
             "description": "Redirect to https://twc-comicsite-frontend.vercel.app"
           },
@@ -129,126 +132,65 @@
         }
       }
     },
-    "/test-post": {
-      "post": {
-        "tags": [],
+    "/comics": {
+      "get": {
+        "tags": [
+          "Comics"
+        ],
         "description": "",
         "parameters": [],
         "responses": {
-          "201": {
-            "description": "Created"
+          "200": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/BaseResponse"
+            }
           }
         }
-      }
-    },
-    "/test-delete/{id}": {
-      "delete": {
-        "tags": [],
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          }
-        }
-      }
-    },
-    "/signin": {
+      },
       "post": {
         "tags": [
-          "User"
+          "Comics"
         ],
-        "description": "Endpoint to sign in a specific user",
-        "parameters": [
-          {
-            "name": "obj",
-            "in": "body",
-            "description": "User information.",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/AddUser"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/users/{id}": {
-      "get": {
-        "tags": [
-          "User"
-        ],
-        "description": "Endpoint to get a specific user.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "User registered successfully.",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/v2/test-get": {
-      "get": {
-        "tags": [],
-        "description": "Description here...",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/v2/test-delete/{id}": {
-      "delete": {
-        "tags": [],
         "description": "",
-        "parameters": [
+        "parameters":[
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
+            "name": "authorization",
+            "in": "header",
+            "description": "Bearer Token",
+            "required": true
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/BaseResponse"
+            }
+          }
+        }
+      }
+    },
+    "/comicData": {
+      "post": {
+        "tags": [
+          "Comics"
+        ],
+        "description": "",
+        "parameters":[
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Bearer Token",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/BaseResponse"
+            }
           }
         }
       }
@@ -259,12 +201,10 @@
       "type": "object",
       "properties": {
         "success": {
-          "type": "boolean",
-          "example": true
+          "type": "boolean"
         },
         "url": {
-          "type": "string",
-          "example": "https://pagosbg.bgeneral.com?"
+          "type": "string"
         }
       }
     },
@@ -272,12 +212,58 @@
       "type": "object",
       "properties": {
         "subtotal": {
-          "type": "number",
-          "example": "100"
+          "type": "number"
         },
         "comicIds": {
-          "type": "string",
-          "example": "10"
+          "type": "string"
+        }
+      }
+    },
+
+    "ComicsResponse":{
+      "type": "object",
+      "properties": {
+        "com_id": {
+          "type": "number"
+        },
+        "com_name": {
+          "type": "string"
+        },
+        "com_description": {
+          "type": "string"
+        },
+        "com_picture": {
+          "type": "string"
+        },
+        "com_house": {
+          "type": "string"
+        },
+        "com_starRating": {
+          "type": "number"
+        },
+        "com_price": {
+          "type": "number"
+        },
+        "com_gender": {
+          "type": "string"
+        },
+        "com_trending": {
+          "type": "number"
+        },
+        "com_descountCheck": {
+          "type": "number"
+        },
+        "com_descountValue": {
+          "type": "number"
+        },
+        "status": {
+          "type": "number"
+        },
+        "tag": {
+          "type": "string"
+        },
+        "com_chapter": {
+          "type": "number"
         }
       }
     },
@@ -285,93 +271,23 @@
       "type": "object",
       "properties": {
         "errorDescription": {
-          "type": "string",
-          "example": "Error description here..."
+          "type": "string"
         }
       }
     },
-    "Parents": {
+    "BaseResponse": {
       "type": "object",
       "properties": {
-        "father": {
-          "type": "string",
-          "example": "Simon Doe"
-        },
-        "mother": {
-          "type": "string",
-          "example": "Marie Doe"
-        }
-      }
-    },
-    "User": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "example": "Jhon Doe"
-        },
-        "age": {
-          "type": "number",
-          "example": 29
-        },
-        "parents": {
-          "$ref": "#/definitions/Parents"
-        },
-        "diplomas": {
+        "data": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "school": {
-                "type": "string",
-                "example": "XYZ University"
-              },
-              "year": {
-                "type": "number",
-                "example": 2020
-              },
-              "completed": {
-                "type": "boolean",
-                "example": true
-              },
-              "internship": {
-                "type": "object",
-                "properties": {
-                  "hours": {
-                    "type": "number",
-                    "example": 290
-                  },
-                  "location": {
-                    "type": "string",
-                    "example": "XYZ Company"
-                  }
-                }
-              }
-            }
+            "$ref": "#/definitions/ComicsResponse"
           }
+        },
+        "isCached": {
+          "type":"boolean"
         }
       }
-    },
-    "AddUser": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "example": "Jhon Doe"
-        },
-        "age": {
-          "type": "number",
-          "example": 29
-        },
-        "about": {
-          "type": "string",
-          "example": ""
-        }
-      },
-      "required": [
-        "name",
-        "age"
-      ]
     }
   }
 }
