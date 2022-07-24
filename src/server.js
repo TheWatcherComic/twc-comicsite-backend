@@ -3,8 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const getFilesWithKeyword = require('./utils/getFilesWithKeyword');
 const morgan = require('morgan');
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./utils/swagger-output.json')
 const fs = require('fs');
-
 class Server {
   constructor() {
 
@@ -25,6 +26,8 @@ class Server {
       });
     });
 
+    // Documentation
+    this.app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerFile))
     this.routes();
   }
 
@@ -35,6 +38,7 @@ class Server {
       this.app.use('/', router);
     })
   }
+
 
   // Starting the server
   listen() {

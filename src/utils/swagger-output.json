@@ -1,0 +1,377 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "The Watcher Comic API",
+    "description": "Documentation for The Watcher Comic."
+  },
+  "host": "the-watcher-comic-backend.herokuapp.com",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Comics",
+      "description": "Comics Endpoints"
+    },
+    {
+      "name": "Payment",
+      "description": "Payment Endpoints"
+    }
+  ],
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/pagosbg/url": {
+      "post": {
+        "tags": [
+          "Payment"
+        ],
+        "description": "Endpoint para generar la url de pago con yappy",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Payment information.",
+            "required": true
+          },
+          {
+            "name": "YappyUrlRequest",
+            "in": "body",
+            "description": "Payment information.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/YappyUrlRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Url successfully generated.",
+            "schema": {
+              "$ref": "#/definitions/YappyUrlResponse"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorBaseResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ErrorBaseResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ErrorBaseResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pagosbg/id/{id}/status/{status}": {
+      "get": {
+        "tags": [
+          "Payment"
+        ],
+        "description": "Endpoint para cambiar el estado de la orden",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Payment information.",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "301": {
+            "description": "Redirect to https://twc-comicsite-frontend.vercel.app"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/ErrorBaseResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ErrorBaseResponse"
+            }
+          },
+          "500": {
+            "description": "Redirect to https://twc-comicsite-frontend.vercel.app"
+          }
+        }
+      }
+    },
+    "/test-post": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/test-delete/{id}": {
+      "delete": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/signin": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint to sign in a specific user",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "User information.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddUser"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint to get a specific user.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/v2/test-get": {
+      "get": {
+        "tags": [],
+        "description": "Description here...",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/v2/test-delete/{id}": {
+      "delete": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "YappyUrlResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": true
+        },
+        "url": {
+          "type": "string",
+          "example": "https://pagosbg.bgeneral.com?"
+        }
+      }
+    },
+    "YappyUrlRequest": {
+      "type": "object",
+      "properties": {
+        "subtotal": {
+          "type": "number",
+          "example": "100"
+        },
+        "comicIds": {
+          "type": "string",
+          "example": "10"
+        }
+      }
+    },
+    "ErrorBaseResponse": {
+      "type": "object",
+      "properties": {
+        "errorDescription": {
+          "type": "string",
+          "example": "Error description here..."
+        }
+      }
+    },
+    "Parents": {
+      "type": "object",
+      "properties": {
+        "father": {
+          "type": "string",
+          "example": "Simon Doe"
+        },
+        "mother": {
+          "type": "string",
+          "example": "Marie Doe"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jhon Doe"
+        },
+        "age": {
+          "type": "number",
+          "example": 29
+        },
+        "parents": {
+          "$ref": "#/definitions/Parents"
+        },
+        "diplomas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "school": {
+                "type": "string",
+                "example": "XYZ University"
+              },
+              "year": {
+                "type": "number",
+                "example": 2020
+              },
+              "completed": {
+                "type": "boolean",
+                "example": true
+              },
+              "internship": {
+                "type": "object",
+                "properties": {
+                  "hours": {
+                    "type": "number",
+                    "example": 290
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "XYZ Company"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "AddUser": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Jhon Doe"
+        },
+        "age": {
+          "type": "number",
+          "example": 29
+        },
+        "about": {
+          "type": "string",
+          "example": ""
+        }
+      },
+      "required": [
+        "name",
+        "age"
+      ]
+    }
+  }
+}

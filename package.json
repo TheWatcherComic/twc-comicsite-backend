@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node ./src/app.js",
-    "start": "nodemon ./src/app.js"
+    "start": "nodemon ./src/app.js",
+    "start-gendoc": "node swaggerAutogen.js"
   },
   "author": "",
   "license": "ISC",
@@ -19,7 +20,9 @@
     "fs": "^0.0.1-security",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
+    "node-cache": "^5.1.2",
     "nodemon": "^2.0.19",
+    "swagger-ui-express": "^4.5.0",
     "uuidv4": "^6.2.13",
     "yappy-node-back-sdk": "file:yappy-node-back-sdk-1.1.222.tar"
   }
