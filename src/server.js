@@ -11,10 +11,8 @@ class Server {
 
     // Initialization
     this.app = express();
-    // Documentation
-    this.app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerFile))
-    //this.app.set('json spaces', 4);
-    //this.app.use(express.json());
+    this.app.set('json spaces', 4);
+    this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
 
     // Middlewares
@@ -27,9 +25,10 @@ class Server {
         stack: err.stack || 'no stack defined'
       });
     });
-
-    
     this.routes();
+
+    // Documentation
+    this.app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerFile))
   }
 
   // Routes
@@ -46,8 +45,8 @@ class Server {
     const port = process.env.PORT || 5000;
     this.app.listen(port, () => {
       console.info('Express application running on port: ' + port + ' 🔥');
-  })
+    })
   }
-  
+
 }
 module.exports = Server;
