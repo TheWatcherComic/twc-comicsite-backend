@@ -11,6 +11,8 @@ class Server {
 
     // Initialization
     this.app = express();
+    // Documentation
+    this.app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerFile))
     this.app.set('json spaces', 4);
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
@@ -26,8 +28,7 @@ class Server {
       });
     });
 
-    // Documentation
-    this.app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+    
     this.routes();
   }
 
