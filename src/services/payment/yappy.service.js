@@ -12,6 +12,10 @@ class YappyService {
         const taxes = Number((subtotal * 0.07).toFixed(2));
         const total = subtotal + taxes;
         const orderId = uuid.split("-").join("").slice(0, 10)
+
+        console.log(comicIds);
+
+
         const payment = {
             total: null,
             subtotal: null,
@@ -33,12 +37,13 @@ class YappyService {
         };
         const [rowsUser, fieldsUser] = await dbConnection.queryDB('call dbsp_getStoreComicsByUserId(?)', true, [authId])
         rowsUser.forEach(element => {
-            if(!comicIds.includes(element.com_id)) {
-                const [rows, fields] = dbConnection.queryDB('call dbsp_insertOrder(?, ?, ?, ?)', true, [orderId, 'generated', comicIds, authId]);
+            if(element.com_id != comicIds) {
+                const [rows, fields] = dbConnection.queryDB('call dbsp_insertOrder(?, ?, ?, ?)', true, [orderId, 'generated',1, authId]);
             }
         });
         return yappyClient.getPaymentUrl(newPayment);
     }
+    
     async confirmPaymentService({ id, status }) {
         const [rows, fields] = await dbConnection.queryDB('call dbsp_updateOrderByOrderId(?, ?)', true, [id, status]);
     }
