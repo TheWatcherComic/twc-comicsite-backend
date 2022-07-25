@@ -1,0 +1,188 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: The Watcher Comic API
+  description: Documentation for The Watcher Comic.
+host: the-watcher-comic-backend.herokuapp.com
+basePath: "/api"
+tags:
+- name: Comics
+  description: Comics Endpoints
+- name: Payment
+  description: Payment Endpoints
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  "/pagosbg/url":
+    post:
+      tags:
+      - Payment
+      description: Endpoint para generar la url de pago con yappy
+      produces:
+      - application/json
+      parameters:
+      - name: authorization
+        in: header
+        description: Bearer Token
+        required: true
+      - name: YappyUrlRequest
+        in: body
+        description: Payment information.
+        required: true
+        schema:
+          "$ref": "#/definitions/YappyUrlRequest"
+      responses:
+        '200':
+          description: Url successfully generated.
+          schema:
+            "$ref": "#/definitions/YappyUrlResponse"
+        '401':
+          description: Unauthorized
+          schema:
+            "$ref": "#/definitions/ErrorBaseResponse"
+        '404':
+          description: Not Found
+          schema:
+            "$ref": "#/definitions/ErrorBaseResponse"
+        '500':
+          description: Internal Server Error
+          schema:
+            "$ref": "#/definitions/ErrorBaseResponse"
+  "/pagosbg/id/{id}/status/{status}":
+    get:
+      tags:
+      - Payment
+      description: Endpoint para cambiar el estado de la orden
+      parameters:
+      - name: authorization
+        in: header
+        description: Bearer Token
+        required: true
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: status
+        in: path
+        required: true
+        type: string
+      responses:
+        '200':
+          description: OK.
+        '301':
+          description: Redirect to https://twc-comicsite-frontend.vercel.app
+        '401':
+          description: Unauthorized
+          schema:
+            "$ref": "#/definitions/ErrorBaseResponse"
+        '404':
+          description: Not Found
+          schema:
+            "$ref": "#/definitions/ErrorBaseResponse"
+        '500':
+          description: Redirect to https://twc-comicsite-frontend.vercel.app
+  "/comics":
+    get:
+      tags:
+      - Comics
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: Created
+          schema:
+            "$ref": "#/definitions/BaseResponse"
+    post:
+      tags:
+      - Comics
+      description: ''
+      parameters:
+      - name: authorization
+        in: header
+        description: Bearer Token
+        required: true
+        type: string
+      responses:
+        '200':
+          description: Created
+          schema:
+            "$ref": "#/definitions/BaseResponse"
+  "/comicData":
+    post:
+      tags:
+      - Comics
+      description: ''
+      parameters:
+      - name: authorization
+        in: header
+        description: Bearer Token
+        required: true
+      responses:
+        '200':
+          description: Created
+          schema:
+            "$ref": "#/definitions/BaseResponse"
+definitions:
+  YappyUrlResponse:
+    type: object
+    properties:
+      success:
+        type: boolean
+      url:
+        type: string
+  YappyUrlRequest:
+    type: object
+    properties:
+      subtotal:
+        type: number
+      comicIds:
+        type: string
+  ComicsResponse:
+    type: object
+    properties:
+      com_id:
+        type: number
+      com_name:
+        type: string
+      com_description:
+        type: string
+      com_picture:
+        type: string
+      com_house:
+        type: string
+      com_starRating:
+        type: number
+      com_price:
+        type: number
+      com_gender:
+        type: string
+      com_trending:
+        type: number
+      com_descountCheck:
+        type: number
+      com_descountValue:
+        type: number
+      status:
+        type: number
+      tag:
+        type: string
+      com_chapter:
+        type: number
+  ErrorBaseResponse:
+    type: object
+    properties:
+      errorDescription:
+        type: string
+  BaseResponse:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          "$ref": "#/definitions/ComicsResponse"
+      isCached:
+        type: boolean

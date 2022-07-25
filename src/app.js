@@ -1,5 +1,4 @@
 const Server = require('./server');
-const app = new Server();
+const routes = require('./routes');
 
-
-app.listen();
+new Server().router(routes).listen();
