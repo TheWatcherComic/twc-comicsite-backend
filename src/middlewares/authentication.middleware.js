@@ -1,7 +1,6 @@
 
 const authentication = require('../config/authentication.config');
 
-
 const getAuthToken = (req, res, next) => {
   if (
     req.headers.authorization &&
@@ -27,7 +26,7 @@ const checkIfAuthenticated = (req, res, next) => {
     } catch (e) {
       return res
         .status(401)
-        .send({ error: 'You are not authorized to make this request' });
+        .send({ errorDescription: 'You are not authorized to make this request' });
     }
   });
 };

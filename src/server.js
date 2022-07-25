@@ -2,24 +2,15 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const getFilesWithKeyword = require('./utils/getFilesWithKeyword');
 const morgan = require('morgan');
-const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('./utils/swagger-output.json')
 const swaggerMiddleware = require('./middlewares/swagger.middleware');
 const fs = require('fs');
-const swaggerOptions = {
-  swaggerOptions: {
-    validatorUrl: null,  
-  },
-  customCss: '.swagger-ui .topbar { display: none }'
-};
+
 class Server {
   constructor() {
 
     // Initialization
     this.app = express();
-    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile, swaggerOptions));
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     

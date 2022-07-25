@@ -2,11 +2,11 @@ const middleware = require('swagger-express-middleware');
 const path = require('path');
 const errorHandler = require('../middlewares/errorHandler.middleware');
 const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('../utils/swagger-output.json')
+const swaggerFile = require('./swagger-doc.json')
 
 const swagger = (app, routes) => {
   return new Promise((resolve, reject) => {
-    middleware(path.join(__dirname, 'api.yml'), app, (err, mw) => {
+    middleware(swaggerFile, app, (err, mw) => {
       console.log("Entro")
       if (err) {
         return reject(err);
@@ -46,12 +46,12 @@ const swagger = (app, routes) => {
           },
         })
       );
-
       // These two middleware don't have any options (yet)
       app.use(mw.CORS(), mw.validateRequest());
 
       routes(app);
 
+      app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerFile));
       // eslint-disable-next-line no-unused-vars, no-shadow
       app.use(errorHandler);
       return resolve();
