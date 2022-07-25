@@ -8,7 +8,6 @@ const dbPool = mysql.createPool({
 });
 
 async function queryDB(query, useExecute, args) {
-    console.log('query: ' + query);
     return new Promise((resolve, reject) => {
         if(undefined !== args) {
             for (let i = 0; i < args.length; ++i) {

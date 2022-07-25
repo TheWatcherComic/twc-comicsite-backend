@@ -1,10 +1,10 @@
 require('dotenv').config();
-const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const errorHandler = require('./middlewares/errorHandler.middleware');
+const express = require('express');
 const morgan = require('morgan');
 const swaggerMiddleware = require('./middlewares/swagger.middleware');
-const fs = require('fs');
 
 class Server {
   constructor() {
@@ -17,19 +17,8 @@ class Server {
     // Middlewares
     this.app.use(morgan('dev'));
     this.app.use(cors());
-    //this.routes();
 
-    //Documentation
-    //this.app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerFile))
   }
-
-  // Routes
-  /*routes() {
-    getFilesWithKeyword('router', __dirname + '/routes').forEach((file) => {
-      const router = require(file);
-      this.app.use('/', router);
-    })
-  }*/
 
   router(routes) {
     this.routes = routes;

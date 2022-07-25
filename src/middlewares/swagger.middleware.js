@@ -7,7 +7,6 @@ const swaggerFile = require('./swagger-doc.json')
 const swagger = (app, routes) => {
   return new Promise((resolve, reject) => {
     middleware(swaggerFile, app, (err, mw) => {
-      console.log("Entro")
       if (err) {
         return reject(err);
       }
