@@ -5,11 +5,11 @@ const controller = require('../../controllers/comics/comics.controller');
 const controllerInstance = new controller();
 
 const router = Router()
-.get(ALLCOMICS_ENDPOINT, controllerInstance.getAllComicsData)
-.post(COMICS_ENDPOINT, controllerInstance.comicInfoController)
+.get(ALLCOMICS_ENDPOINT, checkIfAuthenticated, controllerInstance.getAllComicsData)
+.post(COMICS_ENDPOINT, checkIfAuthenticated, controllerInstance.comicInfoController)
 .post(ALLCOMICS_ENDPOINT, checkIfAuthenticated, controllerInstance.userComicsController)
-.get(ALLCOMICS_ENDPOINT + "/marvel" ,  controllerInstance.getAllComicsData)
-.get(ALLCOMICS_ENDPOINT + "/dc" ,  controllerInstance.getAllComicsData);
+.get(ALLCOMICS_ENDPOINT + "/marvel" , checkIfAuthenticated, controllerInstance.getAllComicsData)
+.get(ALLCOMICS_ENDPOINT + "/dc" ,  checkIfAuthenticated, controllerInstance.getAllComicsData);
 
 
 module.exports = router;

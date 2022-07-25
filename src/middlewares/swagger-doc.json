@@ -41,7 +41,8 @@
             "name": "authorization",
             "in": "header",
             "description": "Bearer Token",
-            "required": true
+            "required": true,
+            "type": "string"
           },
           {
             "name": "YappyUrlRequest",
@@ -92,7 +93,8 @@
             "name": "authorization",
             "in": "header",
             "description": "Bearer Token",
-            "required": true
+            "required": true,
+            "type": "string"
           },
           {
             "name": "id",
@@ -158,7 +160,8 @@
             "name": "authorization",
             "in": "header",
             "description": "Bearer Token",
-            "required": true
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
@@ -182,7 +185,17 @@
             "name": "authorization",
             "in": "header",
             "description": "Bearer Token",
-            "required": true
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "ComicsDataRequest",
+            "in": "body",
+            "description": "Comics Information.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ComicsDataRequest"
+            }
           }
         ],
         "responses": {
@@ -219,7 +232,6 @@
         }
       }
     },
-
     "ComicsResponse":{
       "type": "object",
       "properties": {
@@ -263,6 +275,14 @@
           "type": "string"
         },
         "com_chapter": {
+          "type": "number"
+        }
+      }
+    },
+    "ComicsDataRequest": {
+      "type": "object",
+      "properties": {
+        "idComic": {
           "type": "number"
         }
       }
