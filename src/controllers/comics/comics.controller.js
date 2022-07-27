@@ -12,6 +12,15 @@ class ComicsController {
         }
     }
 
+    async stageComicsData(req,res) {
+        try {
+            const response = await serviceInstance.stageComicsService(req.body);
+            return res.status(200).send(response);
+        } catch (err) {
+            res.status(500).send(err);
+        }
+    }
+
     async userComicsController(req, res) {
         try {
             const response = await serviceInstance.userComicsService(req);

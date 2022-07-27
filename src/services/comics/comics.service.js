@@ -13,6 +13,11 @@ class ComicsService {
         return { data: rows, isCached: false };
     }
 
+    async stageComicsService({stageId}) {
+        const [rows, fields] = await dbConnection.queryDB('call dbsp_getAllComicsByStageID(?)', true, [stageId])
+        return { data: rows, isCached: false };
+    }
+
     async userComicsService({authId}) {
         const [rows, fields] = await dbConnection.queryDB('call dbsp_getStoreComicsByUserId(?)', true, [authId])
         return { data: rows, isCached: false };
