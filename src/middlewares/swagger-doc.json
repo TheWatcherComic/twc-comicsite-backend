@@ -140,7 +140,7 @@
         "tags": [
           "Comics"
         ],
-        "description": "",
+        "description": "Endpoint que devuelve todos los comics",
         "parameters": [
           {
             "name": "authorization",
@@ -163,8 +163,8 @@
         "tags": [
           "Comics"
         ],
-        "description": "",
-        "parameters":[
+        "description": "Endpoint que devuelve todos los comics del cliente",
+        "parameters": [
           {
             "name": "authorization",
             "in": "header",
@@ -188,8 +188,8 @@
         "tags": [
           "Comics"
         ],
-        "description": "",
-        "parameters":[
+        "description": "Endpoint que devuelve toda la data de un comic",
+        "parameters": [
           {
             "name": "authorization",
             "in": "header",
@@ -204,6 +204,40 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/ComicsDataRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created",
+            "schema": {
+              "$ref": "#/definitions/BaseResponse"
+            }
+          }
+        }
+      }
+    },
+    "/stageComic": {
+      "post": {
+        "tags": [
+          "Comics"
+        ],
+        "description": "Endpoint que devuelve todos los stages de comics",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "description": "Bearer Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "StageComicRequest",
+            "in": "body",
+            "description": "Stage Comic Request.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/StageComicRequest"
             }
           }
         ],
@@ -241,7 +275,7 @@
         }
       }
     },
-    "ComicsResponse":{
+    "ComicsResponse": {
       "type": "object",
       "properties": {
         "com_id": {
@@ -296,6 +330,14 @@
         }
       }
     },
+    "StageComicRequest": {
+      "type": "object",
+      "properties": {
+        "stageId": {
+          "type": "number"
+        }
+      }
+    },
     "ErrorBaseResponse": {
       "type": "object",
       "properties": {
@@ -314,7 +356,7 @@
           }
         },
         "isCached": {
-          "type":"boolean"
+          "type": "boolean"
         }
       }
     }
