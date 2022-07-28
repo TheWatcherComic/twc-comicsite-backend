@@ -1,5 +1,4 @@
 const AWS = require('aws-sdk');
-const { json } = require('body-parser');
 const client = new AWS.SecretsManager({ region: "us-east-1" });
 const fs = require('fs');
 class SecretManager {
