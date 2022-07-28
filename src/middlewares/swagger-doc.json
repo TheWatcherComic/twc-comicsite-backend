@@ -171,6 +171,15 @@
             "description": "Bearer Token",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "ClientComicsRequest",
+            "in": "body",
+            "description": "Client Comics Request.",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/BaseRequest"
+            }
           }
         ],
         "responses": {
@@ -345,6 +354,9 @@
           "type": "string"
         }
       }
+    },
+    "BaseRequest": {
+      "type": "object"
     },
     "BaseResponse": {
       "type": "object",
