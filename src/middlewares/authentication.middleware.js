@@ -1,7 +1,6 @@
 
 const authentication = require('../config/authentication.config');
 
-
 const getAuthToken = (req, res, next) => {
   if (
     req.headers.authorization &&
@@ -16,7 +15,7 @@ const getAuthToken = (req, res, next) => {
 
 
 const checkIfAuthenticated = (req, res, next) => {
- getAuthToken(req, res, async () => {
+  getAuthToken(req, res, async () => {
     try {
       const { authToken } = req;
       const userInfo = await authentication
@@ -24,10 +23,11 @@ const checkIfAuthenticated = (req, res, next) => {
         .verifyIdToken(authToken);
       req.authId = userInfo.uid;
       return next();
-    } catch (e) {
-      return res
-        .status(401)
-        .send({ error: 'You are not authorized to make this request' });
+    } catch (err) {
+      console.log("Error: " + err.message);
+      err.message = "User is not authenticated";
+      err.status = 401;
+      next(err);
     }
   });
 };

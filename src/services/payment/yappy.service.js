@@ -34,18 +34,23 @@ class YappyService {
         };
         const [rowsUser, fieldsUser] = await dbConnection.queryDB('call dbsp_getStoreComicsByUserId(?)', true, [authId]);
         rowsUser.forEach(element => {
-            if(comicIds === element.com_id) {
-                boolean = true;
+            if(comicIds == element.com_id) {
+                throw new Error("Item already bought!");
             }
         });
-        if (boolean) {
-            return { errorMsg: "Item already bought"}
-        }
+
         const [rows, fields] = await dbConnection.queryDB('call dbsp_insertOrder(?, ?, ?, ?)', true, [orderId, "generated", comicIds, authId]);
+        if(rows[0].success != 1){
+            throw new Error("Failed to insert orderId");
+        }
         return yappyClient.getPaymentUrl(newPayment);
     }
+    
     async confirmPaymentService({ id, status }) {
         const [rows, fields] = await dbConnection.queryDB('call dbsp_updateOrderByOrderId(?, ?)', true, [id, status]);
+        if(rows[0].success != 1){
+            throw new Error("Failed to update orderId");
+        }
     }
 }
 module.exports = YappyService;

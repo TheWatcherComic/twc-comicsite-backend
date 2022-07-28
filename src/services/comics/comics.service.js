@@ -14,7 +14,11 @@ class ComicsService {
     }
 
     async stageComicsService({stageId}) {
+        if (myCache.has(stageId)) {
+            return { data: myCache.get(stageId), isCached: true };
+        }
         const [rows, fields] = await dbConnection.queryDB('call dbsp_getAllComicsByStageID(?)', true, [stageId])
+        myCache.set(stageId, rows, 60*60*24);
         return { data: rows, isCached: false };
     }
 
@@ -24,11 +28,11 @@ class ComicsService {
     }
 
     async ComicInfoService({idComic}) {
-        if (myCache.has("comicData")) {
-            return { data: myCache.get("comicData"), isCached: true };
+        if (myCache.has(idComic)) {
+            return { data: myCache.get(idComic), isCached: true };
         }
         const [rows, fields] = await dbConnection.queryDB('call dbsp_getComicsByComicId(?)', true, [idComic])
-        myCache.set("comicData", rows, 60*60*24);
+        myCache.set(idComic, rows, 60*60*24);
         return { data: rows, isCached: false };
     }
 
