@@ -13,6 +13,15 @@ class ComicsService {
         return { data: rows, isCached: false };
     }
 
+    async stageComicsService({stageId}) {
+        if (myCache.has(stageId)) {
+            return { data: myCache.get(stageId), isCached: true };
+        }
+        const [rows, fields] = await dbConnection.queryDB('call dbsp_getAllComicsByStageID(?)', true, [stageId])
+        myCache.set(stageId, rows, 60*60*24);
+        return { data: rows, isCached: false };
+    }
+
     async userComicsService({authId}) {
         const [rows, fields] = await dbConnection.queryDB('call dbsp_getStoreComicsByUserId(?)', true, [authId])
         return { data: rows, isCached: false };
