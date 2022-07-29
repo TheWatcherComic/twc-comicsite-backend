@@ -5,6 +5,6 @@ const controller = require('../../controllers/payment/yappy.controller');
 const controllerInstance = new controller();
 const router = Router()
 .post(YAPPY_ENDPOINT + "/url", checkIfAuthenticated, controllerInstance.generateUrlMethod)
-.get(YAPPY_ENDPOINT + "/id/:id/status/:status" , checkIfAuthenticated, controllerInstance.confirmPayment);
+.get(YAPPY_ENDPOINT + "/id/:id/status/:status", controllerInstance.confirmPayment);
 
 module.exports = router;
