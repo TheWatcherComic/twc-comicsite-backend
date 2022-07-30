@@ -9,7 +9,6 @@ class YappyController {
             return res.status(200).send(response);
         } catch (err) {
             console.log("Error: " + err.message);
-            err.message = "Error encountered while generating url for yappy"
             next(err);
         }
     }
